@@ -39,5 +39,32 @@ namespace EquipTrack.Domain
         /// Gets ID of a user to whom the device is assigned.
         /// </summary>
         public int? UserId { get; private set; }
+
+        /// <summary>
+        /// Assigns a device to a user.
+        /// </summary>
+        /// <param name="userId">User's ID.</param>
+        /// <exception cref="InvalidOperationException">Thrown if device is not in required state.</exception>
+        public void AssignToUser(int userId)
+        {
+            if (State == DeviceState.Assigned || State == DeviceState.InRepair)
+                throw new InvalidOperationException($"Device is not in stock, Device's state: '{State}'");
+
+            UserId = userId;
+            State = DeviceState.Assigned;
+        }
+
+        /// <summary>
+        /// Returns device to stock (unassigns from a user).
+        /// </summary>
+        /// <exception cref="InvalidOperationException">Thrown if device is not in required state.</exception>
+        public void ReturnToStock()
+        {
+            if (State != DeviceState.Assigned)
+                throw new InvalidOperationException($"Device is not in required state '{nameof(DeviceState.Assigned)}', Device's state: '{State}'");
+
+            UserId = null;
+            State = DeviceState.InStock;
+        }
     }
 }
