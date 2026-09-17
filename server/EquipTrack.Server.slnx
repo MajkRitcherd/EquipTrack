@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="EquipTrack.Domain.Tests/EquipTrack.Domain.Tests.csproj" />
+  <Project Path="EquipTrack.Domain/EquipTrack.Domain.csproj" />
+</Solution>
