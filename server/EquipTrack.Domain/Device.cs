@@ -60,11 +60,27 @@ namespace EquipTrack.Domain
         /// <exception cref="InvalidOperationException">Thrown if device is not in required state.</exception>
         public void ReturnToStock()
         {
+            if (State == DeviceState.InStock)
+                throw new InvalidOperationException("Device is already in stock");
+
             if (State != DeviceState.Assigned)
                 throw new InvalidOperationException($"Device is not in required state '{nameof(DeviceState.Assigned)}', Device's state: '{State}'");
 
             UserId = null;
             State = DeviceState.InStock;
+        }
+
+        /// <summary>
+        /// Send the device to repair.
+        /// </summary>
+        /// <exception cref="InvalidOperationException">Thrown if device is not in required state (in repair).</exception>
+        public void SendToRepair()
+        {
+            if (State == DeviceState.InRepair)
+                throw new InvalidOperationException($"Device is already in repair");
+
+            UserId = null;
+            State = DeviceState.InRepair;
         }
     }
 }
