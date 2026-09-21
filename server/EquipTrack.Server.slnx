@@ -1,4 +1,6 @@
 <Solution>
   <Project Path="EquipTrack.Domain.Tests/EquipTrack.Domain.Tests.csproj" />
   <Project Path="EquipTrack.Domain/EquipTrack.Domain.csproj" />
+  <Project Path="EquipTrack.Infrastructure.Tests/EquipTrack.Infrastructure.Tests.csproj" />
+  <Project Path="EquipTrack.Infrastructure/EquipTrack.Infrastructure.csproj" />
 </Solution>
