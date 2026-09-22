@@ -7,10 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
-builder.Services.AddDbContext<AppDbContext>(options =>
-{
-    options.UseSqlite("Data Source=equiptrack.db");
-});
+builder.Services.AddInfrastructure();
 
 var app = builder.Build();
 
