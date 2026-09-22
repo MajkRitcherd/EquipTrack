@@ -1,3 +1,5 @@
+using EquipTrack.Application.Interfaces;
+using EquipTrack.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -19,6 +21,8 @@ namespace EquipTrack.Infrastructure
             {
                 options.UseSqlite("Data Source=equiptrack.db");
             });
+
+            services.AddScoped<IDeviceRepository, DeviceRepository>();
 
             return services;
         }        

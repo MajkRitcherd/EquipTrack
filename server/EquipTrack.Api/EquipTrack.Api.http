@@ -1,6 +1,6 @@
 @baseUrl = http://localhost:5213
 
-GET {{{{baseUrl}}}}/weatherforecast/
+GET {{baseUrl}}/api/devices/
 Accept: application/json
 
 ###
