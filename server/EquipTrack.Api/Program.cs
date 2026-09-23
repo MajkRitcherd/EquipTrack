@@ -1,4 +1,5 @@
 using EquipTrack.Application.Interfaces;
+using EquipTrack.Application.Mappings;
 using EquipTrack.Infrastructure;
 using EquipTrack.Infrastructure.DataSeeding;
 
@@ -26,8 +27,10 @@ app.UseHttpsRedirection();
 
 app.MapGet("/api/devices", async (IDeviceRepository deviceRepository, CancellationToken cancellationToken) =>
 {
-   var devices = await deviceRepository.GetAllDevicesAsync(cancellationToken);
-   return Results.Ok(devices);
+    var devices = await deviceRepository.GetAllDevicesAsync(cancellationToken);
+    var dtos = devices.Select(device => device.ToResponseDto());
+
+    return Results.Ok(dtos);
 });
 
 app.Run();
