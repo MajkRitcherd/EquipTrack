@@ -56,7 +56,7 @@ public class DeviceMappingTests
         Assert.NotNull(dto);
 
         Assert.Equal("Acer Nitro 5", dto.DisplayName);
-        Assert.Equal("InStock", dto.State); 
+        Assert.Equal("InStock", dto.State); // Default state
 
         Assert.Equal("Ryzen 7800 X3D", dto.Cpu);
         Assert.Null(dto.IntegratedGpu);
