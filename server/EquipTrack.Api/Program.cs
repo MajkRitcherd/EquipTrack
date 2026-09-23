@@ -1,5 +1,6 @@
 using EquipTrack.Application.Interfaces;
 using EquipTrack.Infrastructure;
+using EquipTrack.Infrastructure.DataSeeding;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +11,10 @@ builder.Services.AddOpenApi();
 builder.Services.AddInfrastructure();
 
 var app = builder.Build();
+
+var scope = app.Services.CreateScope();
+var dbInitializer = scope.ServiceProvider.GetRequiredService<DbInitializer>();
+await dbInitializer.SeedDataAsync();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

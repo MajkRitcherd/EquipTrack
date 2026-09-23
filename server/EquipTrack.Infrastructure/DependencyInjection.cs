@@ -1,4 +1,5 @@
 using EquipTrack.Application.Interfaces;
+using EquipTrack.Infrastructure.DataSeeding;
 using EquipTrack.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -23,6 +24,7 @@ namespace EquipTrack.Infrastructure
             });
 
             services.AddScoped<IDeviceRepository, DeviceRepository>();
+            services.AddScoped<DbInitializer>();
 
             return services;
         }        
