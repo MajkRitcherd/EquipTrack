@@ -13,7 +13,7 @@ namespace EquipTrack.Api.Middlewares
         /// <inheritdoc/>
         public async ValueTask<bool> TryHandleAsync(HttpContext httpContext, Exception exception, CancellationToken cancellationToken)
         {
-            logger.LogError("An error occurred: {ExpetionMessage}", exception.Message);
+            logger.LogError(exception, "An error occurred");
 
             var details = new ProblemDetails
             {
