@@ -11,6 +11,13 @@ namespace EquipTrack.Infrastructure.Repositories
     public class DeviceRepository(AppDbContext appDbContext) : IDeviceRepository
     {
         /// <inheritdoc/>
+        public async Task AddAsync(Device device, CancellationToken cancellationToken = default)
+        {
+            appDbContext.Devices.Add(device);
+            await appDbContext.SaveChangesAsync(cancellationToken);
+        }
+
+        /// <inheritdoc/>
         public Task<List<Device>> GetAllDevicesAsync(CancellationToken cancellationToken = default)
         {
             return appDbContext.Devices

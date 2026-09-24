@@ -8,6 +8,14 @@ namespace EquipTrack.Application.Interfaces
     public interface IDeviceRepository
     {
         /// <summary>
+        /// Adds a new device to database asynchronously.
+        /// </summary>
+        /// <param name="device">Device to save to database.</param>
+        /// <param name="cancellationToken">A token to monitor for cancellation requests.</param>
+        /// <returns>A task that adds device to database.</returns>
+        Task AddAsync(Device device, CancellationToken cancellationToken = default);
+
+        /// <summary>
         /// Retrieves all devices from the database asynchronously.
         /// </summary>
         /// <param name="cancellationToken">A token to monitor for cancellation requests.</param>

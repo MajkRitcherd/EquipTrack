@@ -44,6 +44,32 @@ namespace EquipTrack.Application.Validators
 
             RuleFor(device => device.StorageInGB)
                 .GreaterThan(0).WithMessage("Total storage should be at least 1 GB");
+
+            RuleFor(device => device.Cpu)
+                .NotEmpty().WithMessage("CPU must be provided if any hardware info is entered")
+                .When(HasAnyHardwareInfo);
+
+            RuleFor(device => device.RamStorageInGB)
+                .NotNull().WithMessage("RAM must be provided if any hardware info is entered")
+                .GreaterThan(0).WithMessage("RAM storage should be at least 1 GB")
+                .When(HasAnyHardwareInfo);
+
+            RuleFor(device => device.StorageInGB)
+                .NotNull().WithMessage("Total storage must be provided if any hardware info is entered")
+                .GreaterThan(0).WithMessage("Total storage should be at least 1 GB")
+                .When(HasAnyHardwareInfo);
+        }
+
+        /// <summary>
+        /// Determines whether or not the create request has hardware information such as CPU or RAM storage or Total Storage.
+        /// </summary>
+        /// <param name="request">Data-Transfer Object (DTO) used to create device.</param>
+        /// <returns>True, if hardware info is specified (either CPU or RAM storage or Total storage), otherwise false.</returns>
+        private bool HasAnyHardwareInfo(CreateDeviceRequest request)
+        {
+            return !string.IsNullOrEmpty(request.Cpu)
+                || request.RamStorageInGB.HasValue
+                || request.StorageInGB.HasValue;
         }
     }
 }

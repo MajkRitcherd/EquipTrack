@@ -1,7 +1,9 @@
+using EquipTrack.Application.DTOs;
 using EquipTrack.Application.Interfaces;
 using EquipTrack.Application.Mappings;
 using EquipTrack.Infrastructure;
 using EquipTrack.Infrastructure.DataSeeding;
+using FluentValidation;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +12,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddOpenApi();
 
 builder.Services.AddInfrastructure();
+builder.Services.AddCustomValidators();
 
 var app = builder.Build();
 
@@ -31,6 +34,24 @@ app.MapGet("/api/devices", async (IDeviceRepository deviceRepository, Cancellati
     var dtos = devices.Select(device => device.ToResponseDto());
 
     return Results.Ok(dtos);
+});
+
+app.MapPost("/api/devices", async (
+    CreateDeviceRequest request,
+    IValidator<CreateDeviceRequest> validator,
+    IDeviceRepository deviceRepository,
+    CancellationToken cancellationToken) =>
+{
+    var validationResult = await validator.ValidateAsync(request, cancellationToken);
+
+    if (!validationResult.IsValid)
+        return Results.ValidationProblem(validationResult.ToDictionary());
+
+    var newDevice = request.ToDevice();
+
+    await deviceRepository.AddAsync(newDevice, cancellationToken);
+
+    return Results.Created($"/api/devices/{newDevice.Id}", newDevice.ToResponseDto());
 });
 
 app.Run();

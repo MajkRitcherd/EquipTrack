@@ -30,5 +30,37 @@ namespace EquipTrack.Application.Mappings
                 device.HardwareInfo?.StorageInGB
             );
         }
+
+        /// <summary>
+        /// Converts DTO create device request to Device class.
+        /// </summary>
+        /// <param name="request">Data-Transfer Object (DTO) used to create a new device in a system.</param>
+        /// <returns>New device created from request DTO.</returns>
+        public static Device ToDevice(this CreateDeviceRequest request)
+        {
+            DeviceHardwareInfo? hardwareInfo = null;
+            if (!string.IsNullOrEmpty(request.Cpu)
+                && request.RamStorageInGB is {} ramStorage
+                && request.StorageInGB is {} storage)
+            {
+                hardwareInfo = new DeviceHardwareInfo(
+                    request.Cpu,
+                    request.IntegratedGpu,
+                    request.DedicatedGpu,
+                    ramStorage,
+                    storage);
+            }
+
+            var device = new Device
+            {
+                Id = Guid.NewGuid(),
+                ManufacturerName = request.ManufacturerName,
+                ModelName = request.ModelName,
+                SerialNumber = request.SerialNumber,
+                HardwareInfo = hardwareInfo
+            };
+
+            return device;
+        }
     }
 }
