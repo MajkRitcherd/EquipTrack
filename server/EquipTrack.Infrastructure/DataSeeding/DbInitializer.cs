@@ -18,6 +18,8 @@ namespace EquipTrack.Infrastructure.DataSeeding
         /// <returns>A task representing the asynchronous operation.</returns>
         public async Task SeedDataAsync(CancellationToken cancellationToken = default)
         {
+            await appDbContext.Database.EnsureCreatedAsync(cancellationToken);
+
             if (await appDbContext.Devices.AnyAsync(cancellationToken))
                 return;
 
