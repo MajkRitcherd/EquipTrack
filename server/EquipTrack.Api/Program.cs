@@ -1,3 +1,4 @@
+using EquipTrack.Api.Middlewares;
 using EquipTrack.Application.DTOs;
 using EquipTrack.Application.Interfaces;
 using EquipTrack.Application.Mappings;
@@ -13,6 +14,8 @@ builder.Services.AddOpenApi();
 
 builder.Services.AddInfrastructure();
 builder.Services.AddCustomValidators();
+builder.Services.AddProblemDetails();
+builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 
 var app = builder.Build();
 
@@ -27,6 +30,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseExceptionHandler();
 
 app.MapGet("/api/devices", async (IDeviceRepository deviceRepository, CancellationToken cancellationToken) =>
 {
