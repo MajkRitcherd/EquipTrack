@@ -10,5 +10,5 @@ export interface Device {
     integratedGpu: string | null;
     dedicatedGpu: string | null;
     ramStorageInGB: number | null;
-    storageInGb: number | null;
+    storageInGB: number | null;
 }
